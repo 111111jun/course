@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-yh=a&t#9kri&a_#!!_$fu9q2$f)za^g8o$6b=bai-b3aot%+*j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://course-bjdz.onrender.com"]
+ALLOWED_HOSTS = ["course-backend-oj23.onrender.com"]
 
 
 INSTALLED_APPS = [
