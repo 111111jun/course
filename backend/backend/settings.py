@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-yh=a&t#9kri&a_#!!_$fu9q2$f)za^g8o$6b=bai-b3aot%+*j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["https://course-bjdz.onrender.com"]
 
 
 INSTALLED_APPS = [
@@ -45,6 +45,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://course-bjdz.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True  # ← 新增：允許傳遞 cookie
@@ -52,21 +53,30 @@ CORS_ALLOW_CREDENTIALS = True  # ← 新增：允許傳遞 cookie
 # ===== Session 設定（新增）=====
 SESSION_COOKIE_SAMESITE = None # ⬅️ 修改：開發環境設為 None
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SECURE = False  # 開發環境用 False
+SESSION_COOKIE_SECURE = False # 開發環境用 False
 SESSION_COOKIE_AGE = 86400  # 1天
 
 # ===== CSRF 設定（新增）=====
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://course-bjdz.onrender.com",
 ]
 CSRF_COOKIE_SAMESITE = None # ⬅️ 新增：CSRF Cookie 也需要設定
+
+
+# ===== 部署環境 (Render) HTTPS 設定 =====
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 # 
 # ⬇️ ⬇️ ⬇️ 這裡是最重要的修改 ⬇️ ⬇️ ⬇️
 # 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         # 移除 'rest_framework.authentication.SessionAuthentication',
         # 這會讓 @csrf_exempt 重新生效
     ],
